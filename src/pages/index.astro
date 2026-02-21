@@ -1,0 +1,158 @@
+---
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="Justin Ko — Software engineer focused on Ruby on Rails, AI, and building tools that help developers ship better software. Currently building PullMaster." />
+		<meta property="og:title" content="Justin Ko" />
+		<meta property="og:description" content="Justin Ko is a software engineer focused on Ruby on Rails, AI, and building tools that help developers ship better software. He is currently building PullMaster." />
+		<meta property="og:image" content="https://avatars.githubusercontent.com/u/14007?v=4" />
+		<meta property="og:type" content="website" />
+		<title>Justin Ko</title>
+	</head>
+	<body>
+		<main class="landing">
+			<img src="https://avatars.githubusercontent.com/u/14007?v=4" alt="Justin Ko" class="avatar" width="120" height="120" />
+			<p class="bio">Justin Ko is a software engineer focused on <a href="https://rubyonrails.org" target="_blank" rel="noopener noreferrer" class="bio-link">Ruby on Rails</a>, AI, and building tools that help developers ship better software. He is currently building <a href="https://www.pullmaster.ai" target="_blank" rel="noopener noreferrer" class="bio-link">PullMaster</a>.</p>
+			<nav class="links">
+				<a href="https://github.com/justinko" target="_blank" rel="noopener noreferrer" class="link">GitHub</a>
+				<a href="https://www.linkedin.com/in/jko170/" target="_blank" rel="noopener noreferrer" class="link">LinkedIn</a>
+				<a href="mailto:hello@justinko.dev" class="link">Email</a>
+			</nav>
+		</main>
+	</body>
+</html>
+
+<style>
+	:root {
+		--bg-dark: #0a0a0f;
+		--bg-darker: #050508;
+		--text: #e8e8ed;
+		--text-muted: #8888a0;
+		--accent: #f5c518;
+		--card-bg: rgba(255, 255, 255, 0.04);
+		--card-border: rgba(255, 255, 255, 0.08);
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		min-height: 100%;
+	}
+
+	body {
+		margin: 0;
+		min-height: 100vh;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+		background: linear-gradient(
+			135deg,
+			var(--bg-dark) 0%,
+			#0d0d14 25%,
+			#08080c 50%,
+			var(--bg-darker) 75%,
+			var(--bg-dark) 100%
+		);
+		background-size: 400% 400%;
+		animation: gradient-shift 15s ease infinite;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.5rem;
+	}
+
+	@keyframes gradient-shift {
+		0%,
+		100% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+	}
+
+	.landing {
+		text-align: center;
+		max-width: 32rem;
+		padding: 2.5rem 2rem;
+		background: var(--card-bg);
+		backdrop-filter: blur(12px);
+		border-radius: 1.5rem;
+		border: 1px solid var(--card-border);
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+	}
+
+	.avatar {
+		display: block;
+		width: 120px;
+		height: 120px;
+		margin: 0 auto 1.25rem;
+		border-radius: 50%;
+		border: 2px solid var(--card-border);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+	}
+
+	.bio {
+		margin: 0 0 2rem;
+		font-size: 1.125rem;
+		color: var(--text-muted);
+		line-height: 1.6;
+	}
+
+	.bio-link {
+		color: var(--accent);
+		text-decoration: none;
+		transition: color 0.2s ease, text-decoration 0.2s ease;
+	}
+
+	.bio-link:hover {
+		text-decoration: underline;
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		justify-content: center;
+	}
+
+	.link {
+		display: inline-block;
+		padding: 0.6rem 1.25rem;
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--text);
+		text-decoration: none;
+		background: transparent;
+		border: 1px solid var(--card-border);
+		border-radius: 9999px;
+		transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+	}
+
+	.link:hover {
+		transform: translateY(-2px);
+		border-color: var(--accent);
+		box-shadow: 0 0 20px rgba(245, 197, 24, 0.3);
+		color: var(--accent);
+	}
+
+	@media (max-width: 480px) {
+		.landing {
+			padding: 2rem 1.5rem;
+		}
+
+		.links {
+			flex-direction: column;
+		}
+
+		.link {
+			width: 100%;
+		}
+	}
+</style>
