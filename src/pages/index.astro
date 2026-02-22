@@ -1,4 +1,14 @@
 ---
+import { getCollection, render } from "astro:content";
+
+const allThoughts = await getCollection("thoughts");
+const sortedThoughts = allThoughts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const thoughtsWithContent = await Promise.all(
+	sortedThoughts.map(async (entry) => {
+		const { Content } = await render(entry);
+		return { entry, Content, dateStr: entry.data.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) };
+	})
+);
 ---
 
 <html lang="en">
@@ -16,14 +26,33 @@
 		<title>Justin Ko</title>
 	</head>
 	<body>
-		<main class="landing">
-			<img src="https://avatars.githubusercontent.com/u/14007?v=4" alt="Justin Ko" class="avatar" width="120" height="120" />
-			<p class="bio">Justin Ko is a software engineer focused on <a href="https://rubyonrails.org" target="_blank" rel="noopener noreferrer" class="bio-link">Ruby on Rails</a>, AI, and building tools that help developers ship better software. He is currently building <a href="https://www.pullmaster.ai" target="_blank" rel="noopener noreferrer" class="bio-link">PullMaster</a>.</p>
-			<nav class="links">
-				<a href="https://github.com/justinko" target="_blank" rel="noopener noreferrer" class="link">GitHub</a>
-				<a href="https://www.linkedin.com/in/jko170/" target="_blank" rel="noopener noreferrer" class="link">LinkedIn</a>
-				<a href="mailto:hello@justinko.dev" class="link">Email</a>
-			</nav>
+		<main class="page">
+			<section class="landing">
+				<img src="https://avatars.githubusercontent.com/u/14007?v=4" alt="Justin Ko" class="avatar" width="120" height="120" />
+				<p class="bio">Justin Ko is a software engineer focused on <a href="https://rubyonrails.org" target="_blank" rel="noopener noreferrer" class="bio-link">Ruby on Rails</a>, AI, and building tools that help developers ship better software. He is currently building <a href="https://www.pullmaster.ai" target="_blank" rel="noopener noreferrer" class="bio-link">PullMaster</a>.</p>
+				<nav class="links">
+					<a href="https://github.com/justinko" target="_blank" rel="noopener noreferrer" class="link">GitHub</a>
+					<a href="https://www.linkedin.com/in/jko170/" target="_blank" rel="noopener noreferrer" class="link">LinkedIn</a>
+					<a href="mailto:hello@justinko.dev" class="link">Email</a>
+				</nav>
+			</section>
+			{thoughtsWithContent.length > 0 && (
+				<section class="thoughts">
+					<h2 class="thoughts-title">Thoughts</h2>
+					<ul class="thoughts-list">
+						{thoughtsWithContent.map(({ entry, Content, dateStr }) => (
+							<li class="thought-item">
+								<time class="thought-date" datetime={entry.data.date.toISOString()}>
+									{dateStr}
+								</time>
+								<div class="thought-body">
+									<Content />
+								</div>
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
 		</main>
 	</body>
 </html>
@@ -65,6 +94,15 @@
 		align-items: center;
 		justify-content: center;
 		padding: 1.5rem;
+	}
+
+	.page {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2.5rem;
+		max-width: 32rem;
+		width: 100%;
 	}
 
 	@keyframes gradient-shift {
@@ -142,8 +180,74 @@
 		color: var(--accent);
 	}
 
+	.thoughts {
+		width: 100%;
+		padding: 2.5rem 2rem;
+		background: var(--card-bg);
+		backdrop-filter: blur(12px);
+		border-radius: 1.5rem;
+		border: 1px solid var(--card-border);
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+	}
+
+	.thoughts-title {
+		margin: 0 0 1.5rem;
+		font-size: 1rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.thoughts-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.thought-item {
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.thought-item:last-child {
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+
+	.thought-date {
+		display: block;
+		font-size: 0.8rem;
+		font-weight: 500;
+		color: var(--accent);
+		margin-bottom: 0.5rem;
+	}
+
+	.thought-body {
+		font-size: 1rem;
+		color: var(--text-muted);
+		line-height: 1.6;
+	}
+
+	.thought-body :global(p) {
+		margin: 0;
+	}
+
+	.thought-body :global(a) {
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.thought-body :global(a:hover) {
+		text-decoration: underline;
+	}
+
 	@media (max-width: 480px) {
-		.landing {
+		.landing,
+		.thoughts {
 			padding: 2rem 1.5rem;
 		}
 
